@@ -27,9 +27,29 @@ app.use(express.static(path.join(__dirname, '../public')));
 // allow cors requests using exprss
 
 // Start the server
-app.listen(port, () => {
+const server=app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
   console.log(`http://localhost:${port}`);
 });
+
+// after closing the server
+// process.on('exit', () => {
+//   prisma.$disconnect();
+// });
+const shutdown = async () => {
+  console.log('Shutting down server...');
+  server.close(() => {
+    console.log('Server closed');
+    process.exit(0);
+  });
+};
+
+process.on('SIGTERM', shutdown);
+process.on('SIGINT', shutdown);
+
+
+
+
+
 
 export default app;
