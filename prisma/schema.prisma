@@ -20,7 +20,7 @@ model User {
   password      String
   role          String        @default("user")
   rememberToken String?
-  createdAt     DateTime      @default(now()) @db.DateTime
+  createdAt     DateTime      @default(now()) 
   UserDetails   UserDetails[]
   Orders        Order[]
   Wishlists     Wishlist[]
@@ -38,11 +38,11 @@ model ParentCategory {
   slug        String    @unique
   status      String    @default("active")
   // Use `DateTime` instead of `Timestamp` for timestamps
-  createdAt   DateTime  @default(now()) @db.DateTime
-  updatedAt   DateTime  @default(now()) @updatedAt @db.DateTime
+  createdAt   DateTime  @default(now()) 
+  updatedAt   DateTime  @default(now())  
   // Prisma does not have a direct equivalent to Laravel's `softDeletes`
   // However, you can use a nullable DateTime field to mark deleted records
-  deletedAt   DateTime? @db.DateTime
+  deletedAt   DateTime? @default(now())
   categories Category[]
   media      Media[]
 }
@@ -57,11 +57,11 @@ model Category {
   slug        String          @unique
   status      String          @default("active")
   // Use `DateTime` instead of `Timestamp` for timestamps
-  createdAt   DateTime        @default(now()) @db.DateTime
-  updatedAt   DateTime        @default(now()) @updatedAt @db.DateTime
+  createdAt   DateTime        @default(now()) 
+  updatedAt   DateTime        @default(now())  
   // Prisma does not have a direct equivalent to Laravel's `softDeletes`
   // However, you can use a nullable DateTime field to mark deleted records
-  deletedAt   DateTime?       @db.DateTime
+  deletedAt   DateTime?        
 
   products Product[]
   media    Media[]
@@ -82,11 +82,11 @@ model Product {
   details               String?
   additionalInformation String?
   // Use `DateTime` instead of `Timestamp` for timestamps
-  createdAt             DateTime  @default(now()) @db.DateTime
-  updatedAt             DateTime  @default(now()) @updatedAt @db.DateTime
+  createdAt             DateTime  @default(now()) 
+  updatedAt             DateTime  @default(now())  
   // Prisma does not have a direct equivalent to Laravel's `softDeletes`
   // However, you can use a nullable DateTime field to mark deleted records
-  deletedAt             DateTime? @db.DateTime
+  deletedAt             DateTime? 
 
   variants ProductVariant[]
 
@@ -110,11 +110,11 @@ model ProductVariant {
   markedPrice Float
   stock       Int
   // Use `DateTime` instead of `Timestamp` for timestamps
-  createdAt   DateTime  @default(now()) @db.DateTime
-  updatedAt   DateTime  @default(now()) @updatedAt @db.DateTime
+  createdAt   DateTime  @default(now()) 
+  updatedAt   DateTime  @default(now())  
   // Prisma does not have a direct equivalent to Laravel's `softDeletes`
   // However, you can use a nullable DateTime field to mark deleted records
-  deletedAt   DateTime? @db.DateTime
+  deletedAt   DateTime? 
 
   orderItems OrderItem[]
   cart       Cart[]
@@ -133,8 +133,8 @@ model UserDetails {
   zipCode   String?
   state     String?
   // Use `DateTime` instead of `Timestamp` for timestamps
-  createdAt DateTime @default(now()) @db.DateTime
-  updatedAt DateTime @default(now()) @updatedAt @db.DateTime
+  createdAt DateTime @default(now()) 
+  updatedAt DateTime @default(now())  
 }
 
 model Order {
@@ -147,7 +147,7 @@ model Order {
   trackingNo      Float
   shippingCharge  Float          @default(0)
   createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
+  updatedAt       DateTime       
   deletedAt       DateTime?
 
   orderItems OrderItem[]
@@ -157,8 +157,8 @@ model PaymentMethod {
   id        Int      @id @default(autoincrement())
   name      String
   type      String
-  createdAt DateTime @default(now()) @db.DateTime
-  updatedAt DateTime @default(now()) @updatedAt @db.DateTime
+  createdAt DateTime @default(now()) 
+  updatedAt DateTime @default(now())  
   orders    Order[]
 }
 
@@ -172,7 +172,7 @@ model OrderItem {
   variantId Int?
   quantity  Int?
   createdAt DateTime        @default(now())
-  updatedAt DateTime        @updatedAt
+  updatedAt DateTime        
   deletedAt DateTime?       @map("deleted_at")
 }
 
@@ -182,8 +182,8 @@ model Contact {
   email     String
   subject   String
   message   String
-  createdAt DateTime @default(now()) @db.DateTime
-  updatedAt DateTime @default(now()) @updatedAt @db.DateTime
+  createdAt DateTime @default(now()) 
+  updatedAt DateTime @default(now())  
 }
 
 model Coupon {
@@ -191,8 +191,8 @@ model Coupon {
   name      String
   code      String
   discount  Float
-  createdAt DateTime @default(now()) @db.DateTime
-  updatedAt DateTime @default(now()) @updatedAt @db.DateTime
+  createdAt DateTime @default(now()) 
+  updatedAt DateTime @default(now())  
 }
 
 model Wishlist {
@@ -200,8 +200,8 @@ model Wishlist {
   name      String
   user      User     @relation(fields: [userId], references: [id])
   userId    String
-  createdAt DateTime @default(now()) @db.DateTime
-  updatedAt DateTime @default(now()) @updatedAt @db.DateTime
+  createdAt DateTime @default(now()) 
+  updatedAt DateTime @default(now())  
 }
 
 model Review {
@@ -213,7 +213,7 @@ model Review {
   rating    Float
   review    String
   createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  updatedAt DateTime  
   deletedAt DateTime?
 }
 
@@ -224,7 +224,7 @@ model Profile {
   nickname  String?
   bio       String?
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime 
 }
 
 model Cart {
@@ -237,7 +237,7 @@ model Cart {
   variantId Int?
   quantity  Int
   createdAt DateTime        @default(now())
-  updatedAt DateTime        @updatedAt
+  updatedAt DateTime        
   deletedAt DateTime?
 }
 
@@ -256,8 +256,8 @@ model Media {
   parentCategory   ParentCategory? @relation(fields: [parentCategoryId], references: [id])
   parentCategoryId Int?
 
-  createdAt DateTime @default(now()) @db.DateTime
-  updatedAt DateTime @default(now()) @updatedAt @db.DateTime
+  createdAt DateTime @default(now()) 
+  updatedAt DateTime @default(now())  
 }
 
 
