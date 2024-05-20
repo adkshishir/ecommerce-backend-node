@@ -29,41 +29,47 @@ class productController {
     } catch (error: any) {
       return res.status(500).json({
         success: false,
-        error: error.message || 'Internal Server Error',
+        error: error || 'Internal Server Error',
       });
     }
   }
   async store(req: Request, res: Response) {
-    let productData: productType = req.body;
-    productData = {
-      slug: productData.slug,
-      status: productData.status,
-      details: productData.details,
-      additionalInformation: productData.additionalInformation,
-      name: productData.name,
-      description: productData.description,
-      categoryId: Number(productData.categoryId),
-      markedPrice: Number(productData.markedPrice),
-      discount: Number(productData.discount),
-      totalStocks: Number(productData.totalStocks),
-    };
-    const product = await Product.store(productData);
-    const alt = req.body.alt;
-    const image = await Media.store({
-      name: 'product',
-      url:
-        req.protocol +
-        '://' +
-        req.get('host') +
-        '/images/' +
-        req.file?.originalname,
-      alt: alt,
-      type: 'product',
-      productId: product.id,
-    });
-    return res
-      .status(200)
-      .json({ success: true, data: product, imageUrl: image?.url });
+    try {
+      let productData: productType = req.body;
+      productData = {
+        slug: productData.slug,
+        status: productData.status,
+        details: productData.details,
+        additionalInformation: productData.additionalInformation,
+        name: productData.name,
+        description: productData.description,
+        categoryId: Number(productData.categoryId),
+        markedPrice: Number(productData.markedPrice),
+        discount: Number(productData.discount),
+        totalStocks: Number(productData.totalStocks),
+      };
+      const product = await Product.store(productData);
+      const alt = req.body.alt;
+      const image = await Media.store({
+        name: 'product',
+        url:
+          req.protocol +
+          '://' +
+          req.get('host') +
+          '/images/' +
+          req.file?.originalname,
+        alt: alt,
+        type: 'product',
+        productId: product.id,
+      });
+      return res
+        .status(200)
+        .json({ success: true, data: product, imageUrl: image?.url });
+    } catch (error: any) {
+      return res
+        .status(500)
+        .json({ success: false, error: error || 'Internal Server Error' });
+    }
   }
   async show(req: Request, res: Response) {
     const slug = req.params.slug;

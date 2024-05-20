@@ -39,7 +39,7 @@ class ParentCategory {
       },
     });
     const parentCategoriesWithSingleImage = parentCategories.map(
-      (parentCategory) => {
+      (parentCategory:any) => {
         if (parentCategory.media.length > 0) {
           const media = parentCategory.media[0];
           return {

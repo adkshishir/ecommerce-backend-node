@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 
 class Home {
   async getMenuData() {
-    const menuDataWithParentCategories = prisma.parentCategory.findMany({
+    const menuDataWithParentCategories = await prisma.parentCategory.findMany({
       select: {
         name: true,
         slug: true,
@@ -58,7 +58,7 @@ class Home {
         },
       },
     });
-    const menuDataWithOutParentCategories = prisma.category.findMany({
+    const menuDataWithOutParentCategories = await prisma.category.findMany({
       select: {
         name: true,
         slug: true,
