@@ -35,6 +35,8 @@ const registerValidation = [
 
 router.post('/login', loginValidation, userController.login);
 router.post('/register', registerValidation, userController.register);
+router.get('/profile', userController.getProfile);
+
 const authRoutes = router;
 
 export default authRoutes;
