@@ -2,11 +2,11 @@ import User from '../models/User';
 import * as bcrypt from 'bcryptjs';
 import { NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
+import getUser from '../middleware/userMiddleware';
 
 class userController {
   async login(req: any, res: any) {
     try {
-
       const { email, password } = req.body;
       if (!email || !password) {
         return res
@@ -84,6 +84,20 @@ class userController {
       res
         .status(500)
         .json({ success: false, error: error || 'Internal server error' });
+    }
+  }
+  async getProfile(req: any, res: any, next: NextFunction) {
+    try {
+      // get id from token
+      const get = await getUser(req, res, next);
+      if (!get) {
+        return res.status(401).json({ success: false, error: 'Unauthorized' });
+      }
+      const id = get.id;
+      const user = await User.getProfile(id);
+      return res.status(200).json({ success: true, data: user });
+    } catch (error) {
+      throw error;
     }
   }
 }
