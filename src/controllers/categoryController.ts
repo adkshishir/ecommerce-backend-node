@@ -78,7 +78,7 @@ class categoryController {
         name,
         description,
         slug,
-        parentId,
+        parentId: Number(parentId),
       });
       const imageData: any = await Media.store({
         name: img.originalname,
