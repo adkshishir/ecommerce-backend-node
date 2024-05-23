@@ -15,6 +15,18 @@ type productType = {
   additionalInformation: string;
   totalStocks: number;
 };
+export type searchQueryType = {
+  name?: string;
+  category?: string;
+  ParentCategory?: string;
+  minPrice?: string;
+  maxPrice?: string;
+  status?: string;
+  color?: string;
+  size?: string;
+  currentPage: number;
+  pageSize: number;
+};
 
 class productController {
   async index(req: Request, res: Response) {
@@ -124,6 +136,26 @@ class productController {
         .json({ success: false, error: 'No product found' });
     }
     return res.status(200).json({ success: true, data: product });
+  }
+
+  // search products with different pilters like name, category, status price etc
+  async searchProduct(req: Request, res: Response, next: NextFunction) {
+    const searchQuery: searchQueryType =
+      req.query as unknown as searchQueryType;
+    console.log(searchQuery);
+    try {
+      const products = await Product.searchProduct(searchQuery);
+      if (!products) {
+        return res
+          .status(404)
+          .json({ success: false, error: 'No products found' });
+      }
+      return res.status(200).json({ success: true, data: products });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ success: false, error: error || 'Internal Server Error' });
+    }
   }
 }
 export default new productController();
