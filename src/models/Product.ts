@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { searchQueryType } from '../controllers/productController';
 const prisma = new PrismaClient();
 class Product {
   async getAll() {
@@ -52,11 +53,20 @@ class Product {
         where: {
           slug: slug,
         },
-        include: {
+
+        select: {
+          name: true,
+          slug: true,
+          description: true,
+          additionalInformation: true,
+          id: true,
+          markedPrice: true,
+          discount: true,
+          details: true,
+          totalStocks: true,
+          variants: true,
+          reviews: true,
           media: {
-            orderBy: {
-              id: 'desc',
-            },
             select: {
               url: true,
               alt: true,
@@ -118,6 +128,56 @@ class Product {
       return product;
     } catch (error: any) {
       throw error.message;
+    }
+  }
+  async searchProduct(searchQuery: searchQueryType) {
+    try {
+      const products = await prisma.product.findMany({
+        skip: (searchQuery.currentPage - 1) * searchQuery.pageSize,
+        take: searchQuery.pageSize,
+        where: {
+          name: {
+            contains: searchQuery.name,
+          },
+        },
+        select: {
+          media: {
+            select: {
+              url: true,
+              alt: true,
+            },
+          },
+          category: {
+            select: {
+              name: true,
+              slug: true,
+              parent: {
+                select: {
+                  name: true,
+                  slug: true,
+                },
+              },
+            },
+          },
+          variants: {
+            select: {
+              value: true,
+              type: true,
+            },
+          },
+
+          name: true,
+          slug: true,
+          markedPrice: true,
+          discount: true,
+          id: true,
+        },
+      });
+      const productCount = products.length;
+      return { ...products, availabileProducts: productCount };
+    } catch (error: any) {
+      // throw error.message;
+      return false;
     }
   }
 }

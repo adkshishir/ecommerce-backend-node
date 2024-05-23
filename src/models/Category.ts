@@ -86,7 +86,7 @@ class Category {
   async update(id: number, data: CategoryDataType) {
     const category = await prisma.category.update({
       where: {
-        id: id,
+        id: Number(id),
       },
       data: data,
     });
