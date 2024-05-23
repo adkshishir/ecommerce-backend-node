@@ -3,6 +3,7 @@ import Home from '../models/Home';
 import Category from '../models/Category';
 import ParentCategory from '../models/ParentCategory';
 import { Product } from '@prisma/client';
+import { searchQueryType } from './productController';
 
 class HomeController {
   async menu(req: Request, res: Response, next: NextFunction) {
@@ -53,9 +54,10 @@ class HomeController {
     }
   }
   async searchProduct(req: Request, res: Response, next: NextFunction) {
-    const searchQuery = req.query.search;
+    const searchQuery: searchQueryType =
+      req.query as unknown as searchQueryType;
     try {
-      const products = await Home.searchProduct(searchQuery as string);
+      const products = await Home.searchProduct(searchQuery);
       if (!products) {
         return res
           .status(404)
