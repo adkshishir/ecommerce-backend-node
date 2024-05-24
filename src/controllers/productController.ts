@@ -14,6 +14,7 @@ type productType = {
   details: string;
   additionalInformation: string;
   totalStocks: number;
+  variants: any[];
 };
 export type searchQueryType = {
   name?: string;
@@ -59,6 +60,7 @@ class productController {
         markedPrice: Number(productData.markedPrice),
         discount: Number(productData.discount),
         totalStocks: Number(productData.totalStocks),
+        variants: productData.variants,
       };
       const product = await Product.store(productData);
       const alt = req.body.alt;
