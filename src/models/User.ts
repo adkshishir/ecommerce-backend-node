@@ -25,6 +25,8 @@ class User {
         select: {
           name: true,
           email: true,
+          id: true,
+          role: true,
           carts: {
             select: {
               id: true,
