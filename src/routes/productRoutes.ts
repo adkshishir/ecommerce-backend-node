@@ -7,7 +7,7 @@ const router = Router();
 
 router.get('/', productController.index);
 router.post('/', uploadWithMulter, productMiddleware, productController.store);
-router.get('/:show', productController.show);
+router.get('/:slug', productController.show);
 router.put(
   '/:id',
   uploadWithMulter,
