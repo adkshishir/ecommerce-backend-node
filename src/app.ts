@@ -6,6 +6,7 @@ import * as path from 'path';
 import productRoutes from './routes/productRoutes';
 import homeRoutes from './routes/HomeRoutes';
 import * as cors from 'cors';
+import cartRoutes from './routes/cartRoutes';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -22,6 +23,7 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api', homeRoutes);
+app.use('/api/cart', cartRoutes);
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, '../public')));
 // allow cors requests using exprss
