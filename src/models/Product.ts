@@ -88,6 +88,7 @@ class Product {
           },
         },
       });
+      console.log(product)
       return { ...product, media: product?.media[0] || null };
     } catch (error: any) {
       throw error.message;
@@ -95,9 +96,29 @@ class Product {
   }
 
   async store(data: any) {
+    let variants = data.variants.map((variant: any) => {
+      return {
+        ...variant,
+        stock: Number(variant.stock),
+        additionalPrice: Number(variant.additionalPrice)
+      };
+    })
     try {
       const product = await prisma.product.create({
-        data: data,
+        data: {
+          variants: {
+            create: variants,
+          },
+          name: data.name,
+          description: data.description,
+          additionalInformation: data.additionalInformation,
+          slug: data.slug,
+          categoryId: Number(data.categoryId),
+          markedPrice: Number(data.markedPrice),
+          discount: Number(data.discount),
+          totalStocks: Number(data.totalStocks),
+
+        },
       });
       return product;
     } catch (error: any) {
