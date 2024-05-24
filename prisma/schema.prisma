@@ -28,6 +28,7 @@ model User {
   profile       Profile?
   carts         Cart[]
   media         Media[]
+
 }
 
 // Define your data model for parent_categories table
@@ -50,7 +51,7 @@ model ParentCategory {
 // Define your data model for categories table
 model Category {
   id          Int             @id @default(autoincrement())
-  parent      ParentCategory? @relation(fields: [parentId], references: [id])
+  parent      ParentCategory? @relation(fields: [parentId], references: [id]) 
   parentId    Int?            @db.Int
   name        String
   description String?
@@ -88,7 +89,7 @@ model Product {
   // However, you can use a nullable DateTime field to mark deleted records
   deletedAt             DateTime?
 
-  variants Variant[] @relation("ProductVariant")
+  variants Variant[]
 
   orderItems OrderItem[]
 
@@ -101,12 +102,13 @@ model Product {
 // Define your data model for product_variants table
 model Variant {
   id             Int              @id @default(autoincrement())
-  products       Product[]        @relation("ProductVariant")
+  Product        Product          @relation(fields: [productId], references: [id])
+  productId      Int              @db.Int
   name           String
   type           String
   value          String
   status         String           @default("active")
-  markedPrice    Float
+  additionalPrice Float
   stock          Int
   // Use `DateTime` instead of `Timestamp` for timestamps
   createdAt      DateTime         @default(now())
@@ -196,7 +198,6 @@ model Coupon {
 
 model Wishlist {
   id        Int      @id @default(autoincrement())
-  name      String
   user      User     @relation(fields: [userId], references: [id])
   userId    String
   product   Product  @relation(fields: [productId], references: [id])
@@ -238,7 +239,7 @@ model Cart {
   variantId Int
   quantity  Int
   createdAt DateTime  @default(now())
-  updatedAt DateTime
+  updatedAt DateTime?
   deletedAt DateTime?
 }
 
