@@ -88,7 +88,6 @@ class Product {
           },
         },
       });
-      console.log(product)
       return { ...product, media: product?.media[0] || null };
     } catch (error: any) {
       throw error.message;
