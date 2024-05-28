@@ -90,13 +90,11 @@ class userController {
     try {
       // get id from token
       const get = await getUser(req, res, next);
-      if (!get.id) {
-        return res.status(401).json({ success: false, error: 'Unauthorized' });
-      }
-      console.log(get)
-      const id = get.id;
-      const user = await User.getProfile(id);
-      return res.status(200).json({ success: true, data: user });
+      if (get?.id) {
+        const id = get.id;
+        const user = await User.getProfile(id);
+        return res.status(200).json({ success: true, data: user });
+      } 
     } catch (error) {
       throw error;
     }
