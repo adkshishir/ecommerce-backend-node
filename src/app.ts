@@ -14,7 +14,12 @@ const app = express();
 const port = process.env.PORT || 3000;
 app.use(express.json());
 const corsOptions = {
-  origin: ['http://localhost:3000', '*'],
+  origin: [
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'http://localhost:3002',
+    'http://*',
+  ],
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 app.use('*', cors(corsOptions));
