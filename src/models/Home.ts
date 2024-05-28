@@ -109,6 +109,9 @@ class Home {
       select: {
         name: true,
         slug: true,
+        totalStocks: true,
+        markedPrice: true,
+        discount: true,
         media: {
           select: {
             url: true,
@@ -149,6 +152,9 @@ class Home {
         },
         name: true,
         slug: true,
+        totalStocks: true,
+        markedPrice: true,
+        discount: true,
         media: {
           select: {
             url: true,
