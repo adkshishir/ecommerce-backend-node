@@ -85,8 +85,9 @@ class CartController {
       if (!get) {
         return res.status(401).json({ success: false, error: 'Unauthorized' });
       }
-      const id = get.id;
-      const cart = await Cart.delete(id);
+      // const id = get.id;
+      const id = req.params.id;
+      const cart = await Cart.delete(Number(id));
       return res.status(200).json({ success: true, data: cart });
     } catch (error) {
       throw error;
