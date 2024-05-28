@@ -218,7 +218,6 @@ class Home {
         },
       };
     }
-    console.log(searchQuery);
     let skip: number = 0;
     let take: number = 10;
 
