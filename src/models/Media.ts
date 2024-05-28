@@ -23,7 +23,6 @@ class Media {
   }
 
   async store(data: ImageDataType) {
-    console.log(data)
     try {
       //   save the image using multer in the public images folder and then store it in the database
       const image = await prisma.media.create({
@@ -31,7 +30,6 @@ class Media {
       });
       return image;
     } catch (error: any) {
-      console.log(error.message)
       return null
     }
   }
