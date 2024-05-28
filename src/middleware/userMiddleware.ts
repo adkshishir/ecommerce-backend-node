@@ -15,7 +15,7 @@ const getUser = async (req: any, res: any, next: any) => {
           return decoded;
         }
     } catch (error) {
-        return false
+        return res.status(400).json({ message: 'Invalid token' });
     }
 };
 export default getUser
