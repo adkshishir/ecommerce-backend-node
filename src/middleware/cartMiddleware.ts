@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 
 const cartMiddleware = [
   body('productId').not().isEmpty().withMessage('Description is required'),
-  body('variantId').not().isEmpty().withMessage('Slug is required'),
+  // body('variantId').not().isEmpty().withMessage('Slug is required'),
   body('quantity').not().isEmpty().withMessage('Parent category is required'),
 
   // Authorization check
