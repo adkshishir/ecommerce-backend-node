@@ -26,6 +26,13 @@ class User {
           name: true,
           email: true,
           id: true,
+          _count: {
+            select: {
+              Wishlists: true,
+              carts: true,
+              Orders: true,
+            },
+          },
           role: true,
           carts: {
             select: {
@@ -46,6 +53,25 @@ class User {
                 select: {
                   name: true,
                   slug: true,
+                },
+              },
+            },
+          },
+          Orders: {
+            select: {
+              id: true,
+              status: true,
+              paymentMethod: true,
+              createdAt: true,
+              orderItems: {
+                select: {
+                  quantity: true,
+                  product: {
+                    select: {
+                      name: true,
+                      slug: true,
+                    },
+                  },
                 },
               },
             },
