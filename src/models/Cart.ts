@@ -10,11 +10,16 @@ class Cart {
   async store(data: cartType) {
     try {
       const cart = await prisma.cart.create({
-        data: data,
+        data: {
+          userId: data.userId,
+          productId: data.productId,
+          quantity: data.quantity,
+          // variantId: data.variantId || null,
+        },
       });
       return cart;
     } catch (error: any) {
-      throw error.message;
+      throw error?.message || error;
     }
   }
   async update(id: number, data: cartType) {
@@ -32,10 +37,11 @@ class Cart {
   }
 
   async delete(id: number) {
+    console.log(id);
     try {
       const cart = await prisma.cart.delete({
         where: {
-          id: Number(id),
+          id: Number(id)||undefined,
         },
       });
       return cart;
@@ -76,6 +82,29 @@ class Cart {
       const cart = await prisma.cart.findMany({
         where: {
           userId: id,
+        },
+        select: {
+          id: true,
+          quantity: true,
+          product: {
+            select: {
+              name: true,
+              slug: true,
+              markedPrice: true,
+              discount: true,
+              media: {
+                select: {
+                  url: true,
+                  alt: true,
+                },
+                take: 1,
+                orderBy: {
+                  id: 'desc',
+                },
+              },
+            },
+          },
+          variantId: true,
         },
       });
       return cart;
