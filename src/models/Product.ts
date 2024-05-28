@@ -147,7 +147,7 @@ class Product {
       });
       return product;
     } catch (error: any) {
-      throw error.message;
+      throw error;
     }
   }
   async searchProduct(searchQuery: searchQueryType) {
