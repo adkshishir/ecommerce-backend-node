@@ -51,7 +51,7 @@ model ParentCategory {
 // Define your data model for categories table
 model Category {
   id          Int             @id @default(autoincrement())
-  parent      ParentCategory? @relation(fields: [parentId], references: [id]) 
+  parent      ParentCategory? @relation(fields: [parentId], references: [id],onDelete: Cascade) 
   parentId    Int?            @db.Int
   name        String
   description String?
@@ -75,7 +75,7 @@ model Product {
   description           String
   slug                  String    @unique
   status                String    @default("active")
-  category              Category  @relation(fields: [categoryId], references: [id])
+  category              Category  @relation(fields: [categoryId], references: [id],onDelete: Cascade)
   categoryId            Int       @db.Int
   markedPrice           Float
   discount              Float
@@ -102,7 +102,7 @@ model Product {
 // Define your data model for product_variants table
 model Variant {
   id             Int              @id @default(autoincrement())
-  Product        Product          @relation(fields: [productId], references: [id])
+  Product        Product          @relation(fields: [productId], references: [id],onDelete: Cascade)
   productId      Int              @db.Int
   name           String
   type           String
@@ -123,7 +123,7 @@ model Variant {
 
 model UserDetails {
   id        Int      @id @default(autoincrement())
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id],onDelete: Cascade)
   userId    String   @unique
   phone1    String
   phone2    String?
@@ -140,9 +140,9 @@ model UserDetails {
 
 model Order {
   id              Int            @id @default(autoincrement())
-  user            User           @relation(fields: [userId], references: [id])
+  user            User           @relation(fields: [userId], references: [id],onDelete: Cascade)
   userId          String
-  paymentMethod   PaymentMethod? @relation(fields: [paymentMethodId], references: [id])
+  paymentMethod   PaymentMethod? @relation(fields: [paymentMethodId], references: [id],onDelete: Cascade)
   paymentMethodId Int
   status          String         @default("pending")
   trackingNo      Float
@@ -165,11 +165,11 @@ model PaymentMethod {
 
 model OrderItem {
   id        Int       @id @default(autoincrement())
-  order     Order     @relation(fields: [orderId], references: [id])
+  order     Order     @relation(fields: [orderId], references: [id],onDelete: Cascade)
   orderId   Int
-  product   Product   @relation(fields: [productId], references: [id])
+  product   Product   @relation(fields: [productId], references: [id],onDelete: Cascade)
   productId Int
-  Variant   Variant   @relation(fields: [variantId], references: [id])
+  Variant   Variant   @relation(fields: [variantId], references: [id],onDelete: Cascade)
   variantId Int
   quantity  Int?
   createdAt DateTime  @default(now())
@@ -198,9 +198,9 @@ model Coupon {
 
 model Wishlist {
   id        Int      @id @default(autoincrement())
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id],onDelete: Cascade)
   userId    String
-  product   Product  @relation(fields: [productId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id],onDelete: Cascade)
   productId Int
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
@@ -208,9 +208,9 @@ model Wishlist {
 
 model Review {
   id        Int       @id @default(autoincrement())
-  product   Product   @relation(fields: [productId], references: [id])
+  product   Product   @relation(fields: [productId], references: [id],onDelete: Cascade)
   productId Int
-  user      User      @relation(fields: [userId], references: [id])
+  user      User      @relation(fields: [userId], references: [id],onDelete: Cascade)
   userId    String
   rating    Float
   review    String
@@ -221,7 +221,7 @@ model Review {
 
 model Profile {
   id        Int      @id @default(autoincrement())
-  user      User?    @relation(fields: [userId], references: [id])
+  user      User?    @relation(fields: [userId], references: [id],onDelete: Cascade)
   userId    String   @unique
   nickname  String?
   bio       String?
@@ -231,11 +231,11 @@ model Profile {
 
 model Cart {
   id        Int     @id @default(autoincrement())
-  user      User    @relation(fields: [userId], references: [id])
+  user      User    @relation(fields: [userId], references: [id],onDelete: Cascade)
   userId    String
-  product   Product @relation(fields: [productId], references: [id])
+  product   Product @relation(fields: [productId], references: [id],onDelete: Cascade)
   productId Int
-  variant   Variant? @relation(fields: [variantId], references: [id])
+  variant   Variant? @relation(fields: [variantId], references: [id],onDelete: Cascade)
   variantId Int?
   quantity  Int
   createdAt DateTime  @default(now())
@@ -249,13 +249,13 @@ model Media {
   url              String
   alt              String?
   type             String
-  product          Product?        @relation(fields: [productId], references: [id])
+  product          Product?        @relation(fields: [productId], references: [id],onDelete: Cascade)
   productId        Int?
-  category         Category?       @relation(fields: [categoryId], references: [id])
+  category         Category?       @relation(fields: [categoryId], references: [id],onDelete: Cascade)
   categoryId       Int?
-  user             User?           @relation(fields: [userId], references: [id])
+  user             User?           @relation(fields: [userId], references: [id],onDelete: Cascade)
   userId           String?
-  parentCategory   ParentCategory? @relation(fields: [parentCategoryId], references: [id])
+  parentCategory   ParentCategory? @relation(fields: [parentCategoryId], references: [id],onDelete: Cascade)
   parentCategoryId Int?
 
   createdAt DateTime @default(now())
