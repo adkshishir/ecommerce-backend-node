@@ -96,7 +96,7 @@ class userController {
         return res.status(200).json({ success: true, data: user });
       } 
     } catch (error) {
-      throw error;
+    return res.status(500).json({ success: false, error: error });
     }
   }
 }
