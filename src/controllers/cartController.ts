@@ -32,7 +32,7 @@ class CartController {
       const cart = await Cart.store({ ...data, userId: id });
       return res.status(200).json({ success: true, data: cart });
     } catch (error) {
-      throw error;
+      return res.status(500).json({ success: false, error: error });
     }
   }
 
@@ -47,7 +47,7 @@ class CartController {
       const cart = await Cart.update(Number(id), data);
       return res.status(200).json({ success: true, data: cart });
     } catch (error) {
-      throw error;
+      return res.status(500).json({ success: false, error: error });
     }
   }
 
@@ -61,7 +61,7 @@ class CartController {
       const cart = await Cart.deleteByUserId(id);
       return res.status(200).json({ success: true, data: cart });
     } catch (error) {
-      throw error;
+      return res.status(500).json({ success: false, error: error });
     }
   }
 
@@ -75,7 +75,7 @@ class CartController {
       const cart = await Cart.getById(Number(id));
       return res.status(200).json({ success: true, data: cart });
     } catch (error) {
-      throw error;
+      return res.status(500).json({ success: false, error: error });
     }
   }
 
@@ -90,7 +90,7 @@ class CartController {
       const cart = await Cart.delete(Number(id));
       return res.status(200).json({ success: true, data: cart });
     } catch (error) {
-      throw error;
+      return res.status(500).json({ success: false, error: error });
     }
   }
 }
