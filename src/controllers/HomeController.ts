@@ -31,7 +31,6 @@ class HomeController {
       const menuData = await Home.getMenuData();
       const specialCategories = await Home.getSpecialCategories();
       if (!menuData) {
-        console.log('menuData not found');
         return res
           .status(404)
           .json({ success: false, error: 'No menu data found' });

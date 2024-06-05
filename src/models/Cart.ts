@@ -56,11 +56,10 @@ class Cart {
   }
 
   async delete(id: number) {
-    console.log(id);
     try {
       const cart = await prisma.cart.delete({
         where: {
-          id: Number(id)||undefined,
+          id: Number(id) || undefined,
         },
       });
       return cart;

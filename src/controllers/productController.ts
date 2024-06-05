@@ -150,7 +150,6 @@ class productController {
   async searchProduct(req: Request, res: Response, next: NextFunction) {
     const searchQuery: searchQueryType =
       req.query as unknown as searchQueryType;
-    console.log(searchQuery);
     try {
       const products = await Product.searchProduct(searchQuery);
       if (!products) {
