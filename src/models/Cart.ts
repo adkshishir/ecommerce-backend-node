@@ -9,6 +9,25 @@ export type cartType = {
 class Cart {
   async store(data: cartType) {
     try {
+      // check if the user already has the product in cart
+      const check = await prisma.cart.findFirst({
+        where: {
+          userId: data.userId,
+          productId: data.productId,
+        },
+      });
+      if (check) {
+        const cart = await prisma.cart.update({
+          where: {
+            id: check.id,
+          },
+          data: {
+            ...data,
+            quantity: check.quantity + data.quantity,
+          },
+        });
+        return cart;
+      }
       const cart = await prisma.cart.create({
         data: {
           userId: data.userId,
