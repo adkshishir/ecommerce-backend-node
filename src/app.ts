@@ -9,6 +9,8 @@ import * as cors from 'cors';
 import cartRoutes from './routes/cartRoutes';
 import wishListController from './controllers/wishListController';
 import wishListRoutes from './routes/wishListRoutes';
+import orderMiddleware from './middleware/orderMiddlware';
+import orderRoutes from './routes/orderRoutes';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -32,6 +34,7 @@ app.use('/api/products', productRoutes);
 app.use('/api', homeRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/wishlist', wishListRoutes);
+app.use('/api/order', orderRoutes);
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, '../public')));
 // allow cors requests using exprss
